@@ -2,17 +2,21 @@ services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    user: 1000:1000  # Replace with your user and group IDs, id -u and id -g can be used to find these
+    user: 0:0  # Replace with your user and group IDs, id -u and id -g can be used to find these
     network_mode: 'host'
     volumes:
-      - /path/to/config:/config
-      - /path/to/cache:/cache
+      - /srv/dev-disk-by-uuid-0cbaa652-4cd4-40eb-b9c6-4ee0b3a0608a/docker-data/jellyfin/config:/config
+      - /srv/dev-disk-by-uuid-0cbaa652-4cd4-40eb-b9c6-4ee0b3a0608a/docker-data/jellyfin/cache:/cache
       - type: bind
-        source: /path/to/media
-        target: /media
-      # - type: bind
-        # source: /path/to/media2
-        # target: /media2
+        source: /srv/dev-disk-by-uuid-0cbaa652-4cd4-40eb-b9c6-4ee0b3a0608a/Mediavault/01_Filme
+        target: /filme
+      - type: bind
+        source: /srv/dev-disk-by-uuid-0cbaa652-4cd4-40eb-b9c6-4ee0b3a0608a/Mediavault/02_Serien
+        target: /serien
+        # read_only: true
+      - type: bind
+        source: /srv/dev-disk-by-uuid-0cbaa652-4cd4-40eb-b9c6-4ee0b3a0608a/Mediavault/03_Anime
+        target: /anime
         # read_only: true
       # Optional - extra fonts to be used during transcoding with subtitle burn-in
       # - type: bind
