@@ -1,0 +1,21 @@
+version: '3'
+
+services: 
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    user: 1000:1000  # Replace with your user and group IDs, id -u and id -g can be used to find these
+    # network_mode: 'host' # Uncomment if you want to use host networking
+    # If using host networking, you may need to adjust the ports accordingly
+    # If not using host networking, you can specify ports as below
+    volumes:
+      - /path/to/vault-config:/data
+    ports:
+      - 8000:80 # HTTP port host:container
+    restart: 'unless-stopped'
+    environment:
+      - WEBSOCKET_ENABLED=true  # Enable WebSocket notifications
+      - SIGNUPS_ALLOWED=false  # Disable signups if not needed
+      - INVITATIONS_ALLOWED=false  # Disable invitations if not needed
+      
+      - ADMIN_TOKEN=$$argon2id$$v=19$$m=65540,t=3,p=4$$VFRNdTh4MjdjcW0ydjA0eHl1cVR2N1NsS3NUclhmaXhpT2NOb1NVZGV4WT0$$bFSvxVglE5cKaJwiCMVIKmj33PTDdJc7fS8vYG1qfyM  # Set an admin token for the web interface
